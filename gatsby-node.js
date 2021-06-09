@@ -162,6 +162,18 @@ exports.createPages = ({ actions, graphql }) => {
 
       const tagsTemplate = path.resolve(`./src/templates/tag.js`)
 
+   // Create a Gatsby page for each WordPress tag
+      _.each(result.data.allWordpressTag.edges, ({ node: tag }) => {
+        createPage({
+          path: `/tags/${tag.slug}/`,
+          component: tagsTemplate,
+          context: {
+            name: tag.name,
+            slug: tag.slug,
+          },
+        })
+      })
+    })   
       
 }
 
