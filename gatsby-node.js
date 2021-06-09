@@ -162,50 +162,7 @@ exports.createPages = ({ actions, graphql }) => {
 
       const tagsTemplate = path.resolve(`./src/templates/tag.js`)
 
-      // Create a Gatsby page for each WordPress tag
-      _.each(result.data.allWordpressTag.edges, ({ node: tag }) => {
-        createPage({
-          path: `/tags/${tag.slug}/`,
-          component: tagsTemplate,
-          context: {
-            name: tag.name,
-            slug: tag.slug,
-          },
-        })
-      })
-    })
-    .then(() => {
-      return graphql(`
-        {
-          allWordpressWpUsers {
-            edges {
-              node {
-                id
-                slug
-              }
-            }
-          }
-        }
-      `)
-    })
-    .then(result => {
-      if (result.errors) {
-        result.errors.forEach(e => console.error(e.toString()))
-        return Promise.reject(result.errors)
-      }
-
-      const authorTemplate = path.resolve(`./src/templates/author.js`)
-
-      _.each(result.data.allWordpressWpUsers.edges, ({ node: author }) => {
-        createPage({
-          path: `/author/${author.slug}`,
-          component: authorTemplate,
-          context: {
-            id: author.id,
-          },
-        })
-      })
-    })
+      
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
